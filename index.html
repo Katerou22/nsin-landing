@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/logo-t.png">
+
+    <title>nsin - Always be connected!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-black text-white">
+
+
+<section class="min-h-screen flex items-center bg-gradient-to-b from-black to-gray-900">
+    <div class="max-w-7xl grid text-center grid-cols-1 mx-auto  gap-12 items-center px-6">
+
+        <!-- Hero text -->
+        <div class="flex flex-col justify-center items-center">
+            <img src="assets/logo-t.png" alt="">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400">
+                Stay Online. Always.
+            </h1>
+            <p class="mt-6 text-lg text-gray-300">
+                The nsin built to keep your business connected no matter what.
+            </p>
+
+        </div>
+        <div id="ipBox" class="mt-8 inline-flex flex-col items-center rounded-xl border border-gray-700 px-6 py-4">
+            <!--            <div id="ipText" class="mt-1 text-2xl font-semibold">Detecting…</div>-->
+            <div id="edgeMsg" class="mt-2 text-cyan-300"></div>
+        </div>
+
+
+    </div>
+
+
+</section>
+
+<script>
+    (async function () {
+        try {
+            const res = await fetch('/edge', {cache: 'no-store'});
+            if (!res.ok) throw new Error('edge lookup failed');
+            const {edge_ip} = await res.json();
+
+            // document.getElementById('ipText').textContent = edge_ip;
+
+            let msg = '';
+            switch (edge_ip) {
+                case '206.189.176.136':
+                    msg = 'You are connected from our New York edge';
+                    break;
+                case '185.37.54.20':
+                    msg = 'You are connected from our Tehran edge';
+                    break;
+                default:
+                    msg = 'Unavailable';
+            }
+            document.getElementById('edgeMsg').textContent = msg;
+        } catch (e) {
+            document.getElementById('ipText').textContent = 'Unavailable';
+        }
+    })();
+</script>
+</body>
+</html>
+

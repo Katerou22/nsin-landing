@@ -81,7 +81,7 @@ function handleWaitlist(req, res) {
   });
 
   req.on("end", () => handleForm(body, res));
-});
+}
 
 async function handleForm(body, res) {
   const form = parseQS(body);
